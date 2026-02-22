@@ -17,7 +17,7 @@ class Post(models.Model):
     
 class Like(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='likes')
-    post=models.ForeignKey(post,on_delete=models.CASCADE,related_name='likes')
+    post=models.ForeignKey(Post,on_delete=models.CASCADE,related_name='likes')
     created_at=models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -28,7 +28,7 @@ class Like(models.Model):
 
 class Comment(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='comments')
-    post=models.ForeignKey(post,on_delete=models.CASCADE,related_name='comments')
+    post=models.ForeignKey(Post,on_delete=models.CASCADE,related_name='comments')
     content=models.TextField(max_length=300)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
