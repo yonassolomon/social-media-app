@@ -153,3 +153,10 @@ STATIC_URL = 'static/'
 CORS_ALLOW_ALL_ORIGINS = True # Allow all origins for CORS (not recommended for production) only for development
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+
+LOGIN_REDIRECT_URL = '/'

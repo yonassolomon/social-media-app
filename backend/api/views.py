@@ -6,7 +6,25 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from .models import Post, Like, Comment, Follow
 from .serializers import PostSerializer, UserSerializer, CommentSerializer, FollowSerializer
+from rest_framework import generics, permissions
 
+class UserCreateView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        user.set_password(request.data['password'])  # Hash the password
+        user.save()
+        return Response({
+            'user': UserSerializer(user).data,
+            'message': 'User created successfully',
+        }, status=status.HTTP_201_CREATED)
+    
+    
 @api_view(['GET', 'POST'])
 def post_list(request):
     if request.method == 'GET':

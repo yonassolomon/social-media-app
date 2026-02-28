@@ -4,8 +4,11 @@ from .models import Post,Like,Comment,Follow
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model=User
-        fields=['id','username','email','first_name','last_name']
+        model = User
+        fields = ['id', 'username', 'email', 'password']
+        extra_kwargs = {
+            'password': {'write_only': True}  # Password won't be returned in responses
+        }
 
 class PostSerializer(serializers.ModelSerializer):
     user=UserSerializer(read_only=True)
